@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--Para comentar en html, hay que ponerlo entre estos elementos-->
+<html>
+<head>
+    <title>Basic map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <script src="js/leaflet.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+            /*Aqui se puede poner background:color si se desea*/
+        }
+        #title {
+            position: fixed;
+            top: 10px;
+             left: 50px;
+            margin-top: 0;
+             padding: 10px 15px;
+             background-color: rgba(235, 241, 238, 0.8);
+             border: 1px solid black;
+             border-radius: 40px;
+             text-align: center;
+             z-index: 400;
+         }
+         /*POPUP */
+        
+        .custom .leaflet-popup-tip,
+        .custom .leaflet-popup-content-wrapper {
+        background: #f9ead9;
+        color: #77301b;
+        text-align: center;
+        box-shadow: 2px 3px 20px rgb(240, 238, 238), 0 0 60px #c42712 inset;
+        }
+        
+
+        #description {
+             position: fixed;
+            bottom: 10px;
+             left: 10px;
+            width: 280px;
+            padding: 0px 15px;
+            background-color: rgba(148, 223, 241, 0.8);
+            border: 1px solid black;
+            border-radius: 20px;
+            text-align: justify;
+            z-index: 400;
+        }
+        
+        /*Ojo al dato, al parecer hay que poner el tipo de letra justo debajo del marco (description)donde está metido, sino no funciono O.o*/
+        p1{font-family: "Times New Roman"; text-align: justify; font-size: 15px;}
+        p {font-family: "Calibri"; text-align: justify;}
+        p2{font-family: "Calibri"; font-weight:bold;}
+        p3{font-family: "Arial"; text-align: justify;}
+        h1, h3{text-align: center;}
+
+        #description2 {
+                position: fixed;
+                bottom: 20px;
+                right: 15px;
+                width: 180px;
+                padding: 0px 10px;
+                background-color: rgba(90, 67, 67, 0.8);
+                border: 1px solid rgb(54, 48, 48);
+                border-radius: 3px;
+                color:rgb(255, 255, 255);
+                font: Arial;
+                text-align: justify;
+                text-shadow: 2px 2px 4px #000000;
+                box-shadow: 2px 2px 4px #444444;
+                background-image: linear-gradient(black);
+                z-index: 500;
+        }
+        h4{text-align: center;}
+        ol{text-align: center; font: "Arial"; font-style: italic; color:rgb(184, 184, 185)}
+                
+    </style>
+</head>
+<!--Descripción principal-->
+<body>
+    <div id="map"></div> <!--Es uncontenedor del mapa-->
+    <h1 id="title">Ruta por distintas fortalezas de la provincia de Huesca</h1>
+    <div id="description">
+        <h3>Acerca de esta ruta</h3>
+        <p1>Yo, <p2>Héctor Sampietro Lardiés (NIA: 618230)</p2>, presento este visor con el fin de completar la práctica de la asignatura Visualización online.</p1>
+        <br>
+        <br>
+        <p1>El objetivo es mostrar una especie de ruta turística por múltiples fortalezas que hay en la Provincia de Huesca, las cuales fueron construidas en la Edad Media y en la Edad Moderna.</p1>
+       <br>
+       <br>
+        <p1>El orden propuesto no es obligatorio de seguir, pero es el más óptimo desde el punto de vista temporal. Se empezaría en la Hoya de Huesca, y se terminaría en las depresiones intrapirenaicas</p1>
+        <br>
+        <br>
+        <p3>Arriba a la izquierda hay un controlador, tanto para el mapa de base, como para los elementos de la ruta. Si le da click izquierdo a cada elemento del mapa, aparece una descripción. Para más información, pinche en cada castillo de la lista. Los colores de los círculos marcan la cultura y/o época de construcción.
+        </p3>
+    </div>
+    <!--Lo siguiente es para la descripcion de la derecha, con las imagenes, el nombre de las fortalezas con un link-->
+    <div id="description2">
+        <h4>Fortalezas de la ruta</h4>
+    
+        <ol>
+        <img src= "https://tse1.mm.bing.net/th?id=OIP.rbdVvxwxU2zXSoJvwAFsywHaEK&pid=Api" width= "100px" >
+        <li><a href= "http://castillodeloarre.es/es/" target= "_blank">Castillo de Loarre</a></li>
+        <br>
+        <img src= "https://tse3.mm.bing.net/th?id=OIP.ukuf3KTejfQKD5CA1WS2DwHaE7&pid=Api" width= "100px" >
+        <li><a href= "https://www.castillomontearagon.com/" target= "_blank">Castillo de Montearagón</a></li>
+        <br>
+        <img src= "https://tse1.mm.bing.net/th?id=OIP.Qsfmhs1vvAVsadLiGbf0fwHaFj&pid=Api"  width= "100px">
+        <li><a href= "https://www.turismodearagon.com/ficha/alquezar/" target= "_blank">Castillo de Alquézar (Colegiata Santa María la mayor)</a></li>
+        <br>
+        <img src= "https://tse2.mm.bing.net/th?id=OIP.ilWg1gHz1eBc_GNj2EgW5AHaE8&pid=Api" width= "100px">
+        <li><a href= "https://villadeainsa.com/castillo-fortaleza-de-ainsa/" target= "_blank">Castillo de Aínsa</a></li>
+        <br>
+        <img src= "https://tse4.mm.bing.net/th?id=OIP.0yDva67t3S1ETebqoB96QwHaE8&pid=Api" width= "100px">
+        <li><a href= "https://es.wikipedia.org/wiki/Castillo_de_Bolta%C3%B1a" target= "_blank">Castillo de Boltaña</a></li>
+        <br>
+        <img src= "https://tse1.mm.bing.net/th?id=OIP.hS7y3jCFBagpl9Fepo_45gHaHp&pid=Api"  alt="poum" width= "100px">
+        <li><a href= "https://ciudadeladejaca.es/" target= "_blank">Ciudadela de Jaca</a></li>
+        <br>
+        <img src= "https://tse1.explicit.bing.net/th?id=OIP.wcXxHtBn7GViVrW6n2XO8AHaFj&pid=Api" width= "100px">
+        <li><a href= "https://es.wikipedia.org/wiki/Fuerte_de_Rapit%C3%A1n" target= "_blank">Fuerte Rapitán de Jaca</a></li>
+    </div>
+    
+<script>
+//Para comentar en java, poner o dos barras o bien lo siguiente   /*   texto   */
+//Popups
+ //Las variables Popups deben ir antes de los elementos donde se van a insertar, o bien se pone todo a la vez
+
+var Popup1= ("Castillo de Loarre. Construido el año 1096. Fue nombrado el castillo más bonito de España en el año 2021. Famoso por formar parte del rodaje de Kingdom of Heaven (2005)")
+
+var Popup2= ("Castillo de Montearagón. Construido también en el siglo XI, y actualmente en estado de degradación. Dispuesto en el municipio de Quicena, tiene buenas vistas de las Sierras exteriores Pirenaicas")
+
+var Popup3=("Colegiata de Santa María la Mayor de Alquézar. Esta localidad es famosa por estar inmersa en el Parque Natural de la Sierra y los cañones de Guara, pero presenta un castillo del siglo IX. De origen árabe, tras la conquista por los cristianos fue modificado")
+
+var Popup4=("Castillo de Aínsa. Las primeras estructuras datan del siglo XI, pero fue reformado en el siglo XVII. Dentro se hacen festivales, y en la torre del homenaje hay un pequeño ecomuseo")
+
+var Popup5=("Castillo de Boltaña. Dispuesto en lo alto del cerro de esta capital de Comarca, es el segundo castillo árabe de la ruta, pero la estructura visible fue terminada en el siglo XI. Tiene un considerable estado de degradación")
+
+var Popup6=("La ciudadela de Jaca fue construida a finales de siglo XVI, de acuerdo con los nuevos esquemas de arquitectura militar (Traza italiana). El único evento bélico a destacar fue en la guerra de independencia (principios Siglo XIX), que tras ser capturada por los frances fue retomada tras meses de asedio en 1814. En el foso vive un importante número de ciervos")
+
+var Popup7=("Fortaleza construida, con fines defensivos, a finales del siglo XIX es la más moderno de toda la visita. Está  Ubicada sobre la ciudad de Jaca y desde ahí hay una vista panorámica del entorno, y de la Peña Oroel")   
+
+var custompopup =
+        {
+        'maxWidth': '300',
+        'className' : 'custom'
+        }
+
+        
+
+//Añadir los círculos
+
+let circle = L.layerGroup();
+let circle1 = L.circleMarker ([42.325534,-0.612302], {radius:15, color:"blue", fill:"black"}).bindPopup(Popup1,custompopup).addTo(circle),
+    circle2 = L.circleMarker ([42.152974, -0.344528], {radius:15, color:"blue", fill:"black"}).bindPopup(Popup2,custompopup).addTo(circle),
+    circle3 = L.circleMarker ([42.172471 , 0.028100], {radius:15, color:"brown", fill:"black"}).bindPopup(Popup3,custompopup).addTo(circle),
+    circle4 = L.circleMarker ([42.418035 , 0.135338], {radius:15, color:"blue", fill:"black"}).bindPopup(Popup4,custompopup).addTo(circle),
+    circle5 = L.circleMarker ([42.448375 , 0.068464], {radius:15, color:"brown", fill:"black"}).bindPopup(Popup5,custompopup).addTo(circle),
+    circle6 = L.circleMarker ([42.572442 , -0.55110], {radius:15, color:"purple", fill:"black"}).bindPopup(Popup6,custompopup).addTo(circle),
+    circle7 = L.circleMarker ([42.589028 , -0.53614], {radius:15, color:"purple", fill:"black"}).bindPopup(Popup7,custompopup).addTo(circle);
+
+    
+/* Otra opcion seria poner los circulos individuales sin poner el addMap, y poner lo siguiente
+let circle = L.layerGroup([circle1, circle2, circle3, circle4, circle5, circle6, circle7]);
+*/
+
+//Añadir la línea
+let line = L.polyline(
+  [[42.325534, -0.612302], [42.152974, -0.344528], [42.172471 , 0.028100], [42.418035 , 0.135338], [42.448375 , 0.068464], [42.572442 , -0.55110], [42.589028 , -0.53614] ], 
+  {color: "black", weight: 5}).bindPopup(
+    "Para ir de una fortaleza a otra, es necesario usar principalmente, por orden, la A-1206, A-132, N-240, A-22, A-1229, A-1233, A-1232, N-123, A-138, N-260, A-23 y N-330"
+    );
+
+    //Tilelayers (mapas de fondo)
+
+    let OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	maxZoom: 17,
+})
+    let OpenTopoMap2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'});
+
+    let StreetMaps = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
+    {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'})
+
+//Que el mapa aparezca centrado en x, y coordenadas, con un zoom z, apareciendo de base el tilelayer a, y los círculos
+    let map = L.map("map", {center: [42.4513, -0.2], zoom: 10, layers: [OpenTopoMap, circle]});
+
+let base = {
+    "Topografía": OpenTopoMap,
+    "Topografía2": OpenTopoMap2,
+    "Streetmaps": StreetMaps
+};
+
+let overlayMaps = {
+    "Fortalezas": circle,
+    "Ruta": line
+};
+
+L.control.layers(base, overlayMaps, {position: "topleft", collapsed: false}).addTo(map);
+
+//Con lo siguiente, al hacer click en el mapa, aparecen las coordenadas geográficas
+let popup = L.popup();
+function onMapClick(e) {
+popup
+.setLatLng(e.latlng)
+.setContent(
+"You clicked the map at -<br>" +
+"<b>lon:</b> " + e.latlng.lng + "<br>" +
+"<b>lat:</b> " + e.latlng.lat
+)
+.openOn(map);
+}
+map.addEventListener("click", onMapClick);
+
+
+</script>
+    
+</body>
+</html>
